@@ -15,6 +15,10 @@ app.options("/", cors(corsOptions));
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send("Backend ERP API is running correctly")
+})
+
 const loginRoute = require("./routes/login")
 app.use("/login", loginRoute);
 
