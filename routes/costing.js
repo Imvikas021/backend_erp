@@ -5,7 +5,7 @@ const { error } = require("console");
 
 
 router.get("/", async (req, res) => {
-    const result = await pool.query("SELECT * FROM costing");
+    const result = await pool.query("SELECT * FROM public.costing");
     res.json(result.rows);
 });
 
@@ -18,7 +18,7 @@ router.post("/add", async (req, res) => {
 
     try {
         const result = await pool.query(
-            "INSERT INTO costing (costing_name, costing ) VALUES ($1, $2) RETURNING *",
+            "INSERT INTO public.costing (costing_name, costing ) VALUES ($1, $2) RETURNING *",
             [costing_name, costing]
         )
         res.json(result.rows[0]);
