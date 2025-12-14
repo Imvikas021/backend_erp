@@ -5,43 +5,31 @@ const app = express();
 const cors = require("cors");
 
 const corsOptions = {
-    origin: "*",
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-    allowedHeades: ["Content-Type", "Authorization"]
+    origin: [
+        "http://localhost:3000",
+        "https://frontenderp-production.up.railway.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeades: ["Content-Type", "Authorization"],
+    Credential: true
 };
 app.use(cors(corsOptions));
-
-app.options("/", cors(corsOptions));
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("Backend ERP API is running correctly")
-})
+});
 
-const loginRoute = require("./routes/login")
-app.use("/login", loginRoute);
+app.use("/api/login", require("./routes/login"));
 
-const middlewareRoute = require("./middleware/protected")
-app.use("/protected", middlewareRoute);
+const auth = require("./middleware/protected");
 
-const projectRoute = require("./routes/project")
-app.use("/project", projectRoute);
-
-const productRoute = require("./routes/product")
-app.use("/product", productRoute);
-
-const costingRoute = require("./routes/costing")
-app.use("/costing", costingRoute);
-
-const taskRoute = require("./routes/task1")
-app.use("/task1", taskRoute);
-
-const thingstodoRoute = require("./routes/thingstodo")
-app.use("/thingstodo", thingstodoRoute);
-
-const emailRoute = require("./routes/email")
-app.use("/email", emailRoute);
+app.use("/api/project", auth, require("./routes/project"));
+app.use("/api/product", auth, require("./routes/product"));
+app.use("/api/costing", auth, require("./routes/costing"));
+app.use("/api/task1", auth, require("./routes/task1"));
+app.use("/api/thingstodo", auth, require("./routes/thingstodo"));
+app.use("/api/email", auth, require("./routes/email"));
 
 
 module.exports = app;
