@@ -5,12 +5,18 @@ const PDFTable = require("pdfkit-table");
 
 exports.generatePDF = (client_name, costing_name, costingRows) => {
   return new Promise((resolve, reject) => {
+
+
+    const uploadDir = path.join(__dirname, "..", "uploads");
+    if(!fs.existsSync(uploadDir)){
+      fs.mkdirSync(uploadDir, {recursive: true});
+    }
+
+    const safeName = costing_name.replace("_");
     
     // PDF file path
     const filePath = path.join(
-      __dirname,
-      "..",
-      "uploads",
+      uploadDir,
       `quotation_${costing_name}.pdf`
     );
 
