@@ -1,7 +1,7 @@
 const db = require("../db");
 const { generatePDF } = require("../services/pdfservice");
 const { sendMail } = require("../services/emailService");
-const { path } = require("pdfkit");
+const { path } = require("path");
 const { generateExcel } = require("../services/excelService");
 const PDFDocument = require("pdfkit");
 const { type } = require("os");
@@ -42,14 +42,14 @@ exports.sendEmailController = async (req, res) => {
       attachments: [
         {
           content: pdfbase64,
-          filename: pdfPath.split("/").pop(),
+          filename: path.basename(pdfPath),
           type: "application/pdf",
           disposition:'attachment'
         },
         {
-          filename: excelPath.split("/").pop(),
+          filename: path.basename(excelPath),
           content: excelbase64,
-          type: "application/vnd.openxmlformats- officedocument.spredsheetml.sheet",
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           disposition: " attachment"
         }
       ]
