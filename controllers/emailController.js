@@ -31,7 +31,11 @@ exports.sendEmailController = async (req, res) => {
     // Send email with PDF
 
     const fs = require("fs");
-
+    
+    if(!pdfPath || excelPath){
+      throw new Error("Attachment file path is missing");
+    }
+    
     const pdfbase64 = fs.readFileSync(pdfPath).toString("base64");
     const excelbase64 = fs.readFileSync(excelPath).toString("base64");
 
