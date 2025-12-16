@@ -43,13 +43,11 @@ exports.sendEmailController = async (req, res) => {
         {
           content: pdfbase64,
           filename: pdfPath.split("/").pop(),
-          path: pdfPath,
           type: "application/pdf",
           disposition:'attachment'
         },
         {
           filename: excelPath.split("/").pop(),
-          path: excelPath,
           content: excelbase64,
           type: "application/vnd.openxmlformats- officedocument.spredsheetml.sheet",
           disposition: " attachment"
