@@ -60,9 +60,9 @@ exports.sendEmailController = async (req, res) => {
     });
 
     await db.query(
-      `INSERT INTO email_logs (client_name, costing_name, email_to, pdf_path, status)
+      `INSERT INTO email_logs (client_name, costing_name, email_to)
       VALUES($1, $2, $3, $4, 'SENT')`,
-      [client_name, costing_name, email,pdfPath,]
+      [client_name, costing_name, email]
     );
 
     res.json({ success: true, message: "Email sent successfully!" });
