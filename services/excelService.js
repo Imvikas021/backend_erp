@@ -1,7 +1,18 @@
 const ExcelJS = require("exceljs");
+const fs = require("fs");
 const path = require("path");
 
 exports.generateExcel = async (projectName,costing_name, costingRows) => {
+
+  const uploadDir = path.join(__dirname, "..", "uploads");
+  if(!fs.existsSync(uploadDir)){
+    fs.mkdirSync(uploadDir);
+  }
+
+  const filePath = path.join(
+    uploadsDir,
+    `quotation_${Date.now()}.xlsx`
+  );
 
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet("BOQ", {
@@ -141,7 +152,7 @@ exports.generateExcel = async (projectName,costing_name, costingRows) => {
   sheet.getCell("A26").alignment = { horizontal: "left" };
 
   // OUTPUT FILE
-  const filePath = path.join(__dirname, "..", "uploads", `BOQ_${projectName}.xlsx`);
+
   await workbook.xlsx.writeFile(filePath);
 
   return filePath;
