@@ -1,19 +1,20 @@
 const sgMail = require("@sendgrid/mail");
 
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-const sendMail = async ({ to, subject, message, attachments}) => {
+async function sendMail ({ to, subject, message, attachments}) {
   const msg = {
     to,
     from: process.env.SENDGRID_FROM_EMAIL,
     subject,
     text: message,
-    attachments
+    attachments,
   };
   await sgMail.send(msg);
-};
+}
 
-module.exports = { sendEmail };
+module.exports = {sendMail};
 
 ////const transporter = nodemailer.createTransport({
   //host: "smtp.gmail.com",
