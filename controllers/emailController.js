@@ -1,6 +1,6 @@
 const db = require("../db");
 const { generatePDF } = require("../services/pdfservice");
-const { sendEmail } = require("../services/emailService");
+const { sendMail } = require("../services/emailService");
 const { path } = require("pdfkit");
 const { generateExcel } = require("../services/excelService");
 const PDFDocument = require("pdfkit");
@@ -35,7 +35,7 @@ exports.sendEmailController = async (req, res) => {
     const pdfbase64 = fs.readFileSync(pdfPath).toString("base64");
     const excelbase64 = fs.readFileSync(excelPath).toString("base64");
 
-    await sendEmail({
+    await sendMail({
       to: email,
       subject: `Quotation - ${costing_name}`,
       message: `Dear ${client_name},\n\nPlease find attached your quotation for ${costing_name}.\n\nRegards,\nHeinrich ERP`,
