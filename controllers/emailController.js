@@ -36,7 +36,7 @@ exports.sendEmailController = async (req, res) => {
 
     const pdfBase64 = fs.readFileSync(pdfPath).toString("base64");
     const excelBase64 = fs.readFileSync(excelPath).toString("base64");
-    
+
     try{
       await sendMail({
       to: email,
@@ -53,7 +53,7 @@ exports.sendEmailController = async (req, res) => {
           filename: path.basename(excelPath),
           content: excelBase64,
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          disposition: " attachment"
+          disposition: "attachment"
         }
       ]
     });
