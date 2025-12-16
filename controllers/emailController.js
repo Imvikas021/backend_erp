@@ -35,9 +35,6 @@ exports.sendEmailController = async (req, res) => {
     if(!pdfPath || !excelPath){
       throw new Error("Attachment file path is missing");
     }
-    
-    const pdfbase64 = fs.readFileSync(pdfPath).toString("base64");
-    const excelbase64 = fs.readFileSync(excelPath).toString("base64");
 
     await sendMail({
       to: email,
@@ -45,14 +42,12 @@ exports.sendEmailController = async (req, res) => {
       message: `Dear ${client_name},\n\nPlease find attached your quotation for ${costing_name}.\n\nRegards,\nHeinrich ERP`,
       attachments: [
         {
-          content: pdfbase64,
           filename: path.basename(pdfPath),
           type: "application/pdf",
           disposition:'attachment'
         },
         {
           filename: path.basename(excelPath),
-          content: excelbase64,
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           disposition: " attachment"
         }
