@@ -1,7 +1,7 @@
 const db = require("../db");
 const { generatePDF } = require("../services/pdfservice");
 const { sendMail } = require("../services/emailService");
-const { path } = require("path");
+const  path  = require("path");
 const { generateExcel } = require("../services/excelService");
 
 exports.sendEmailController = async (req, res) => {
@@ -28,7 +28,6 @@ exports.sendEmailController = async (req, res) => {
 
     // Send email with PDF
 
-    const fs = require("fs");
     console.log("PDF PATH:", pdfPath);
     console.log("EXCEL PATH:", excelPath);
     
@@ -43,11 +42,13 @@ exports.sendEmailController = async (req, res) => {
       attachments: [
         {
           filename: path.basename(pdfPath),
+          path: pdfPath,
           type: "application/pdf",
           disposition:'attachment'
         },
         {
           filename: path.basename(excelPath),
+          path: excelPath,
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           disposition: " attachment"
         }
