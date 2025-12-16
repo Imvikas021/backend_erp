@@ -32,7 +32,7 @@ exports.sendEmailController = async (req, res) => {
     console.log("PDF PATH:", pdfPath);
     console.log("EXCEL PATH:", excelPath);
     
-    if(!pdfPath || excelPath){
+    if(!pdfPath || !excelPath){
       throw new Error("Attachment file path is missing");
     }
     
