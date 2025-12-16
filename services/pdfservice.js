@@ -8,6 +8,7 @@ exports.generatePDF = (client_name, costing_name, costingRows) => {
 
 
     const uploadDir = path.join(__dirname, "..", "uploads");
+    
     if(!fs.existsSync(uploadDir)){
       fs.mkdirSync(uploadDir, {recursive: true});
     }

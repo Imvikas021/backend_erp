@@ -4,9 +4,10 @@ const path = require("path");
 
 exports.generateExcel = async (projectName,costing_name, costingRows) => {
 
-  const uploadDir = path.join(__dirname, "..", "uploads");
-  if(!fs.existsSync(uploadDir)){
-    fs.mkdirSync(uploadDir);
+  const uploadsDir = path.join(__dirname, "..", "uploads");
+
+  if(!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir);
   }
 
   const filePath = path.join(
