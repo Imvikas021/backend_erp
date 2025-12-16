@@ -3,7 +3,7 @@ const { generatePDF } = require("../services/pdfservice");
 const { sendEmail } = require("../services/emailService");
 const { path } = require("pdfkit");
 const { generateExcel } = require("../services/excelService");
-const { content } = require("pdfkit/js/page");
+const PDFDocument = require("pdfkit");
 const { type } = require("os");
 
 exports.sendEmailController = async (req, res) => {

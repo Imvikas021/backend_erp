@@ -6,7 +6,7 @@ if(!process.env.SENDGRID_API_KEY){
 }
 
 if(!process.env.SENDGRID_FROM_EMAIL){
-  throw new Error(" SENDGRID_FROM_EMAILno is missing");
+  throw new Error(" SENDGRID_FROM_EMAIL is missing");
 }
 
 
