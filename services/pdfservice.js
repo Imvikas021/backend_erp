@@ -8,7 +8,7 @@ exports.generatePDF = (client_name, costing_name, costingRows) => {
 
 
     const uploadDir = path.join(__dirname, "..", "uploads");
-    
+
     if(!fs.existsSync(uploadDir)){
       fs.mkdirSync(uploadDir, {recursive: true});
     }
@@ -131,7 +131,11 @@ doc.fontSize(12)
 
     doc.end();
 
-    stream.on("finish", () => resolve(filePath));
-    stream.on("error", reject);
+    stream.on("finish", () =>{ 
+      resolve(filePath);
+    });
+    stream.on("error", (err) => {
+      reject(err);
+    });
   });
 };
