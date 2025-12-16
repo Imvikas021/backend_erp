@@ -2,7 +2,7 @@ const ExcelJS = require("exceljs");
 const fs = require("fs");
 const path = require("path");
 
-exports.generateExcel = async (projectName,costing_name, costingRows) => {
+exports.generateExcel = async (company_name,costing_name,costingRows) => {
 
   const uploadsDir = path.join(__dirname, "..", "uploads");
 
@@ -54,7 +54,7 @@ exports.generateExcel = async (projectName,costing_name, costingRows) => {
   sheet.getCell("D6").alignment = { horizontal: "right" };
 
   sheet.mergeCells("A7:H7");
-  sheet.getCell("A7").value = `Project Name : ${projectName}`;
+  sheet.getCell("A7").value = `Project Name : ${company_name}`;
   sheet.getCell("A7").font = { bold: true };
 
 
