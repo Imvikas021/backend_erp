@@ -1,7 +1,6 @@
 const db = require("../db");
 const { generatePDF } = require("../services/pdfservice");
 const { sendMail } = require("../services/emailService");
-const  path  = require("path");
 const { generateExcel } = require("../services/excelService");
 const fs = require("fs");
 const { content } = require("pdfkit/js/page");
@@ -38,9 +37,11 @@ exports.sendEmailController = async (req, res) => {
     }
 
     const pdfBase64 = fs.readFileSync(pdfPath).toString("base64");
-     const excelBase64 = fs.readFileSync(excelPath).toString("base64");
+    const excelBase64 = fs.readFileSync(excelPath).toString("base64");
 
-    await sendMail({
+
+    try{
+      await sendMail({
       to: email,
       subject: `Quotation - ${costing_name}`,
       message: `Dear ${client_name},\n\nPlease find attached your quotation for ${costing_name}.\n\nRegards,\nHeinrich ERP`,
@@ -59,6 +60,13 @@ exports.sendEmailController = async (req, res) => {
         }
       ]
     });
+  } catch (mailError){
+    console.error("SENDGRID ERROR:", mailError.response?.body || mailError.message);
+    return res.status(500).json({
+      success:false,
+      message: "Email sending failed"
+    });
+  }
 
     await db.query(
       `INSERT INTO email_logs (client_name, costing_name, email_to, pdf_path, status)

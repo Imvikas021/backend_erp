@@ -14,7 +14,7 @@ async function sendMail ({ to, subject, message, attachments}) {
   await sgMail.send(msg);
 }
 
-module.exports = {sendMail};
+module.exports = { sendMail };
 
 ////const transporter = nodemailer.createTransport({
   //host: "smtp.gmail.com",
