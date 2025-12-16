@@ -1,6 +1,15 @@
 const sgMail = require("@sendgrid/mail");
 
 
+if(!process.env.SENDGRID_API_KEY){
+  throw new Error(" SENDGRID_API_KEY is missing");
+}
+
+if(!process.env.SENDGRID_FROM_EMAIL){
+  throw new Error(" SENDGRID_FROM_EMAIL is missing");
+}
+
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 exports.sendMail = async ({ to, subject, message, attachments}) => {
