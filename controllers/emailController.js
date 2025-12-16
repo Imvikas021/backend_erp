@@ -1,8 +1,10 @@
 const db = require("../db");
 const { generatePDF } = require("../services/pdfservice");
-const { sendEmailSMTP } = require("../services/emailService");
+const { sendEmail } = require("../services/emailService");
 const { path } = require("pdfkit");
 const { generateExcel } = require("../services/excelService");
+const { content } = require("pdfkit/js/page");
+const { type } = require("os");
 
 exports.sendEmailController = async (req, res) => {
   try {
@@ -27,18 +29,30 @@ exports.sendEmailController = async (req, res) => {
      const excelPath = await generateExcel(client_name, costing_name, costingRows);
 
     // Send email with PDF
-    await sendEmailSMTP({
+
+    const fs = require("fs");
+
+    const pdfbase64 = fs.readFileSync(pdfPath).toString("base64");
+    const excelbase64 = fs.readFileSync(excelPath).toString("base64");
+
+    await sendEmail({
       to: email,
       subject: `Quotation - ${costing_name}`,
       message: `Dear ${client_name},\n\nPlease find attached your quotation for ${costing_name}.\n\nRegards,\nHeinrich ERP`,
       attachments: [
         {
+          content: pdfbase64,
           filename: pdfPath.split("/").pop(),
-          path: pdfPath
+          path: pdfPath,
+          type: "application/pdf",
+          disposition:'attachment'
         },
         {
           filename: excelPath.split("/").pop(),
-          path: excelPath
+          path: excelPath,
+          content: excelbase64,
+          type: "application/vnd.openxmlformats- officedocument.spredsheetml.sheet",
+          disposition: " attachment"
         }
       ]
     });
