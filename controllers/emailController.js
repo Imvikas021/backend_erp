@@ -3,6 +3,8 @@ const { generatePDF } = require("../services/pdfservice");
 const { sendMail } = require("../services/emailService");
 const  path  = require("path");
 const { generateExcel } = require("../services/excelService");
+const fs = require("fs");
+const { content } = require("pdfkit/js/page");
 
 exports.sendEmailController = async (req, res) => {
   try {
@@ -35,6 +37,9 @@ exports.sendEmailController = async (req, res) => {
       throw new Error("Attachment file path is missing");
     }
 
+    const pdfBase64 = fs.readFileSync(pdfPath).toString("base64");
+     const excelBase64 = fs.readFileSync(excelPath).toString("base64");
+
     await sendMail({
       to: email,
       subject: `Quotation - ${costing_name}`,
@@ -42,13 +47,13 @@ exports.sendEmailController = async (req, res) => {
       attachments: [
         {
           filename: path.basename(pdfPath),
-          path: pdfPath,
+          content: pdfBase64,
           type: "application/pdf",
           disposition:'attachment'
         },
         {
           filename: path.basename(excelPath),
-          path: excelPath,
+          content: excelBase64,
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           disposition: " attachment"
         }
