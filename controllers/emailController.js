@@ -3,7 +3,7 @@ const { generatePDF } = require("../services/pdfservice");
 const { sendMail } = require("../services/emailService");
 const { generateExcel } = require("../services/excelService");
 const fs = require("fs");
-const { content } = require("pdfkit/js/page");
+const path = require("path");
 
 exports.sendEmailController = async (req, res) => {
   try {
@@ -23,9 +23,7 @@ exports.sendEmailController = async (req, res) => {
 
     // Generate PDF
     const pdfPath = await generatePDF(client_name, costing_name, costingRows);
-
-
-     const excelPath = await generateExcel(client_name, costing_name, costingRows);
+    const excelPath = await generateExcel(client_name, costing_name, costingRows);
 
     // Send email with PDF
 
@@ -38,8 +36,7 @@ exports.sendEmailController = async (req, res) => {
 
     const pdfBase64 = fs.readFileSync(pdfPath).toString("base64");
     const excelBase64 = fs.readFileSync(excelPath).toString("base64");
-
-
+    
     try{
       await sendMail({
       to: email,
