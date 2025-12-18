@@ -53,7 +53,7 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
   sheet.getCell("A6").font = { bold: true, size: 12 };
 
   sheet.mergeCells("D6:H6");
-  sheet.getCell("D6").value = `Date: ${now.toLocaleDateString("en-IN")}`;
+  sheet.getCell("D6").value = `Date: ${now}`;
   sheet.getCell("D6").alignment = { horizontal: "right" };
 
   sheet.mergeCells("A7:H7");
