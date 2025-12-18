@@ -86,6 +86,5 @@ exports.sendEmailController = async (req, res) => {
     } catch (e) {
       console.log("ERROR SAVING FAILED LOGS", e);
     }
-    res.json({ success: false, message: "ERROR SAVING EMAIL_LOGS." });
   }
 };
