@@ -1,9 +1,15 @@
 const ExcelJS = require("exceljs");
 const fs = require("fs");
 const path = require("path");
-const now = new Date(
-  new Date().toLocaleDateString("en-IN")
-);
+function getCurrentISTDate() {
+  const now = new Date();
+  return now.toLocaleDateString("en-GB", {
+    timeZone: "Asia/Kolkata",
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  }).toUpperCase();
+}
 
 exports.generateExcel = async (company_name,costing_name,costingRows) => {
 
@@ -23,9 +29,7 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
     pageSetup: { paperSize: 9, orientation: "portrait" }
   });
 
-  // ===============================
-  // HEADER SECTION
-  // ===============================
+  // HEADER 
 
   sheet.mergeCells("A1:H1");
   sheet.getCell("A1").value = "HEINRICH CORPORATION INDIA PRIVATE LIMITED";
@@ -47,13 +51,13 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
   // Empty space
   sheet.addRow([]);
 
-  // QUOTATION TITLE
+  // QUOTATION HEADING
   sheet.mergeCells("A6:C6");
   sheet.getCell("A6").value = "Quotation NO:-";
   sheet.getCell("A6").font = { bold: true, size: 12 };
 
   sheet.mergeCells("D6:H6");
-  sheet.getCell("D6").value = `Date: ${now}`;
+  sheet.getCell("D6").value = `Date: ${getCurrentISTDate}`;
   sheet.getCell("D6").alignment = { horizontal: "right" };
 
   sheet.mergeCells("A7:H7");
@@ -61,9 +65,7 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
   sheet.getCell("A7").font = { bold: true };
 
 
-  // ===============================
   // TABLE HEADER
-  // ===============================
 
   sheet.addRow([]);
   const headerRow = sheet.addRow([
@@ -92,9 +94,7 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
   });
 
 
-  // ===============================
   // TABLE BODY (COSTING ITEMS)
-  // ===============================
 
   let serial = 1;
 
@@ -118,9 +118,8 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
     });
   });
 
-  // ===============================
+
   // FOOTER SECTION
-  // ===============================
 
   sheet.addRow([]);
   sheet.addRow([]);
