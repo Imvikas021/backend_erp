@@ -1,7 +1,9 @@
 const ExcelJS = require("exceljs");
 const fs = require("fs");
 const path = require("path");
-const now = new Date();
+const now = new Date(
+  new Date().toLocaleDateString("en-IN", {timeZone: "Asia/Delhi"})
+);
 
 exports.generateExcel = async (company_name,costing_name,costingRows) => {
 
