@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const PDFTable = require("pdfkit-table");
 
-exports.generatePDF = (client_name, costing_name, project_name,costingRows) => {
+exports.generatePDF = (client_name, costing_name, costingRows) => {
   return new Promise((resolve, reject) => {
 
 
@@ -35,7 +35,7 @@ exports.generatePDF = (client_name, costing_name, project_name,costingRows) => {
 
     doc
       .fontSize(16)
-      .text("Quotation NO:" + project_name, { align: "left" })
+      .text("Quotation NO:" , { align: "left" })
       .moveDown(2);
 
 
