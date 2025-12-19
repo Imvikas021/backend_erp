@@ -2,9 +2,8 @@ const ExcelJS = require("exceljs");
 const fs = require("fs");
 const path = require("path");
 function getCurrentISTDate() {
-  const now = new Date();
-  return now.toLocaleDateString("en-GB", {
-    timeZone: "Asia/Delhi",
+  return new Date.toLocaleDateString("en-GB", {
+    timeZone: "Asia/Kolkata",
     day: "2-digit",
     month: "short",
     year: "numeric"
@@ -56,8 +55,8 @@ exports.generateExcel = async (company_name,costing_name,costingRows) => {
   sheet.getCell("A6").value = "Quotation NO:-";
   sheet.getCell("A6").font = { bold: true, size: 12 };
 
-  sheet.mergeCells("D6:H6");
   const currentDate = getCurrentISTDate();
+  sheet.mergeCells("D6:H6");
   sheet.getCell("D6").value = currentDate;
   sheet.getCell("D6").alignment = { horizontal: "right" };
 
