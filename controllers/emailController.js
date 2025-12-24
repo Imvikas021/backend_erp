@@ -7,7 +7,7 @@ const path = require("path");
 
 exports.sendEmailController = async (req, res) => {
   try {
-    const { email, client_name, subject, costing_name } = req.body;
+    const { email, client_name, costing_name } = req.body;
 
     // Fetch ALL costing rows for the selected costingName
     const result = await db.query(
